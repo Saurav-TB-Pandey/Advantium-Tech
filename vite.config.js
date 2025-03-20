@@ -3,5 +3,9 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/Advantium-Tech/", // Change this to match your repo name
+  base: "/", // ✅ Ensure it matches your GitHub repository name
+  // base: "/Advantium-Tech/", // ✅ Ensure it matches your GitHub repository name
+  build: {
+    outDir: "dist",
+  },
 });
