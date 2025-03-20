@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advantium Tech | Technology Solutions Consultancy</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.18.13/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --primary: #3a5eff;
+      --secondary: #00d4ff;
+      --dark: #1a1a2e;
+      --light: #ffffff;
+      --gray: #f5f5f7;
+      --text: #333333;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      color: var(--text);
+      overflow-x: hidden;
+      background-color: var(--light);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(58, 94, 255, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(58, 94, 255, 0.4);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .section {
+      padding: 100px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .section-title span {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+    }
+    
+    header.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-decoration: none;
+    }
+    
+    .logo-icon {
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin: 0 15px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .burger {
+      display: none;
+      cursor: pointer;
+    }
+    
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--dark);
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .hero-image {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60%;
+      max-width: 800px;
+      opacity: 0.9;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+    }
+    
+    .shape1 {
+      top: 20%;
+      left: 10%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--primary);
+      filter: blur(50px);
+    }
+    
+    .shape2 {
+      bottom: 10%;
+      right: 20%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: var(--secondary);
+      filter: blur(50px);
+    }
+    
+    /* About Section */
+    .about {
+      background-color: var(--gray);
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .about-image {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+    }
+    
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .about-text p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    /* Services Section */
+    .services-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .service-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      color: white;
+      font-size: 2rem;
+    }
+    
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .service-card p {
+      line-height: 1.6;
+      color: #666;
+    }
+    
+    /* Technologies Section */
+    .technologies {
+      background-color: var(--gray);
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    
+    .tech-item {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .tech-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tech-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .tech-item h3 {
+      font-size: 1.2rem;
+    }
+    
+    /* Contact Section */
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+    }
+    
+    .contact-form {
+      background-color: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(58, 94, 255, 0.2);
+    }
+    
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .contact-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    
+    .contact-info p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: white;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 60px 0 30px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 20px;
+    }
+    
+    .footer-about p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .footer-links h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-links h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Responsive Design */
+    @media screen and (max-width: 1024px) {
+      .hero-image {
+        width: 50%;
+        right: -50px;
+      }
+      
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      .section {
+        padding: 80px 0;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+      }
+      
+      .hero {
+        height: auto;
+        padding: 120px 0 80px;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-btns {
+        justify-content: center;
+      }
+      
+      .hero-image {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        margin: 50px auto 0;
+        right: auto;
+        top: auto;
+        transform: none;
+      }
+      
+      .about-content,
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-image {
+        order: -1;
+      }
+      
+      .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 20px 0;
+      }
+      
+      .burger {
+        display: block;
+        z-index: 1001;
+      }
+      
+      .toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      
+      .toggle .line2 {
+        opacity: 0;
+      }
+      
+      .toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+    
+    /* Animations */
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .fade-in-delay-1 {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.2s;
+    }
+    
+    .fade-in-delay-2 {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.4s;
+    }
+    
+    .fade-in-delay-3 {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.6s;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    
+    // Icon components
+    const LogoIcon = () => (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 0L37.3205 10V30L20 40L2.67949 30V10L20 0Z" fill="url(#paint0_linear)" />
+        <path d="M20 5L32.3205 12V26L20 33L7.67949 26V12L20 5Z" fill="url(#paint1_linear)" />
+        <path d="M20 10L27.3205 14V22L20 26L12.6795 22V14L20 10Z" fill="white" />
+        <defs>
+          <linearGradient id="paint0_linear" x1="20" y1="0" x2="20" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#3A5EFF" />
+            <stop offset="1" stopColor="#00D4FF" />
+          </linearGradient>
+          <linearGradient id="paint1_linear" x1="20" y1="5" x2="20" y2="33" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#3A5EFF" />
+            <stop offset="1" stopColor="#00D4FF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+    
+    const ReactIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7.5-5.4c1.9 1.3 3 2.9 3 4.4 0 3.9-5.5 7-12 7s-12-3.1-12-7c0-1.5 1.1-3.1 3-4.4.3-.2.5-.6.5-1 0-.4-.3-.8-.6-1C.5 5.8 0 3.8 0 2.5 0 1.1 1.1 0 2.5 0S5 1.1 5 2.5c0 1.3-1 2.3-2.3 2.5 2.5 1.3 5.9 2 9.3 2 3.5 0 6.8-.8 9.3-2C20.2 4.8 19.2 3.8 19.2 2.5 19.2 1.1 20.3 0 21.7 0s2.5 1.1 2.5 2.5c0 1.3-.5 3.3-1.7 4.7-.3.2-.6.6-.6 1 0 .4.2.8.5 1zM12 4C6.5 4 2 6.5 2 9.5S6.5 15 12 15s10-2.5 10-5.5S17.5 4 12 4z"/>
+      </svg>
+    );
+    
+    const NodeIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M12 21.85a1.74 1.74 0 0 1-.87-.22l-2.77-1.63c-.41-.23-.21-.32-.07-.36.55-.18.66-.22 1.25-.57.06-.03.14-.01.2.02l2.13 1.26c.07.04.18.04.25 0l8.28-4.78c.07-.04.12-.13.12-.22V8.04c0-.09-.05-.18-.13-.22L12.12 3.03c-.07-.04-.17-.04-.25 0l-8.28 4.78c-.08.04-.13.13-.13.22v9.54c0 .09.05.17.13.22l2.27 1.31c1.23.62 1.98-.11 1.98-.84V8.85c0-.13.11-.24.24-.24h1.05c.13 0 .24.11.24.24v9.43c0 1.64-.89 2.58-2.44 2.58-.48 0-.85 0-1.9-.52l-2.16-1.25A1.75 1.75 0 0 1 0 17.64V8.1c0-.64.34-1.23.89-1.55L9.17 1.78c.53-.3 1.25-.3 1.78 0l8.29 4.78c.55.32.89.91.89 1.55v9.54c0 .64-.34 1.23-.89 1.55l-8.29 4.78c-.27.16-.56.22-.85.22"/>
+      </svg>
+    );
+    
+    const FullStackIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+      </svg>
+    );
+    
+    const NextIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M11.214.006c-.052.005-.216.022-.364.033C7.442.347 4.25 2.186 2.226 5.013a11.88 11.88 0 0 0-2.118 5.243c-.096.66-.108.854-.108 1.748s.012 1.089.108 1.748c.652 4.507 3.86 8.293 8.209 9.696.779.251 1.6.422 2.533.526.364.04 1.936.04 2.3 0 1.611-.178 2.977-.577 4.323-1.265.207-.106.247-.134.219-.157-.02-.014-.899-1.194-1.955-2.62l-1.919-2.593-2.404-3.559a342.499 342.499 0 0 0-2.422-3.556c-.009-.003-.018 1.578-.023 3.51-.007 3.38-.01 3.516-.052 3.596a.426.426 0 0 1-.206.213c-.075.038-.14.045-.495.045H7.81l-.108-.068a.438.438 0 0 1-.157-.172l-.05-.105.005-4.704.007-4.706.073-.092a.644.644 0 0 1 .174-.143c.096-.047.133-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 2 2.895 4.362l4.734 7.172 1.9 2.878.097-.063a12.318 12.318 0 0 0 2.465-2.163 11.947 11.947 0 0 0 2.825-6.135c.096-.66.108-.854.108-1.748s-.012-1.088-.108-1.748C23.24 5.75 20.032 1.963 15.683.56a12.6 12.6 0 0 0-2.498-.523c-.226-.024-1.776-.05-1.97-.03zm4.913 7.26a.473.473 0 0 1 .237.276c.018.06.022 1.196.018 4.63l-.007 4.547-.636-.951-1.921-2.913-1.922-2.914v-1.33c0-.96.004-1.353.014-1.383a.37.37 0 0 1 .15-.234c.083-.045.123-.05.545-.05h.456l.108.068z"/>
+      </svg>
+    );
+    
+    const EmailIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <polyline points="22,6 12,13 2,6"></polyline>
+      </svg>
+    );
+    
+    const PhoneIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+    );
+    
+    const LocationIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+    );
+    
+    const FacebookIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+      </svg>
+    );
+    
+    const TwitterIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+      </svg>
+    );
+    
+    const LinkedinIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+        <rect x="2" y="9" width="4" height="12"></rect>
+        <circle cx="4" cy="4" r="2"></circle>
+      </svg>
+    );
+    
+    const InstagramIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+    );
+    
+    // Main App Component
+    const App = () => {
+      const [scrolled, setScrolled] = useState(false);
+      const [navActive, setNavActive] = useState(false);
+      const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
+      };
+      
+      useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+      
+      const toggleNav = () => {
+        setNavActive(!navActive);
+      };
+      
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+      };
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        // In a real application, you would send the form data to a server
+        console.log('Form submitted:', formData);
+        alert('Thank you for your message! We will get back to you soon.');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      };
+      
+      // Initialize GSAP animations
+      useEffect(() => {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+          gsap.registerPlugin(ScrollTrigger);
+          
+          // Animate service cards
+          gsap.utils.toArray('.service-card').forEach((card, i) => {
+            gsap.from(card, {
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+              },
+              y: 50,
+              opacity: 0,
+              duration: 0.6,
+              delay: i * 0.2
+            });
+          });
+          
+          // Animate tech items
+          gsap.utils.toArray('.tech-item').forEach((item, i) => {
+            gsap.from(item, {
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+              },
+              y: 30,
+              opacity: 0,
+              duration: 0.5,
+              delay: i * 0.1
+            });
+          });
+          
+          // Animate about section
+          gsap.from('.about-image', {
+            scrollTrigger: {
+              trigger: '.about-image',
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            },
+            x: -50,
+            opacity: 0,
+            duration: 0.8
+          });
+          
+          gsap.from('.about-text', {
+            scrollTrigger: {
+              trigger: '.about-text',
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            },
+            x: 50,
+            opacity: 0,
+            duration: 0.8
+          });
+        }
+      }, []);
+      
+      return (
+        <>
+          <header className={scrolled ? 'scrolled' : ''}>
+            <div className="container nav-container">
+              <a href="#" className="logo">
+                <LogoIcon />
+                <span>AdvantiumTec</span>
+              </a>
+              
+              <ul className={`nav-links ${navActive ? 'active' : ''}`}>
+                <li><a href="#" onClick={toggleNav}>Home</a></li>
+                <li><a href="#about" onClick={toggleNav}>About</a></li>
+                <li><a href="#services" onClick={toggleNav}>Services</a></li>
+                <li><a href="#technologies" onClick={toggleNav}>Technologies</a></li>
+                <li><a href="#contact" onClick={toggleNav}>Contact</a></li>
+              </ul>
+              
+              <div className={`burger ${navActive ? 'toggle' : ''}`} onClick={toggleNav}>
+                <div className="line1"></div>
+                <div className="line2"></div>
+                <div className="line3"></div>
+              </div>
+            </div>
+          </header>
+          
+          <section className="hero">
+            <div className="container">
+              <div className="hero-content fade-in">
+                <h1>Transform Your Business with <span style={{color: '#3a5eff'}}>Leading-Edge</span> Technology Solutions</h1>
+                <p className="fade-in-delay-1">We help businesses innovate and grow through strategic technology consulting and cutting-edge development solutions.</p>
+                <div className="hero-btns fade-in-delay-2">
+                  <a href="#services" className="btn">Our Services</a>
+                  <a href="#contact" className="btn btn-outline">Get In Touch</a>
+                </div>
+              </div>
+            </div>
+            <img src="/api/placeholder/600/400" alt="Technology Innovation" className="hero-image float" />
+            <div className="shape shape1"></div>
+            <div className="shape shape2"></div>
+          </section>
+          
+          <section id="about" className="about section">
+            <div className="container">
+              <h2 className="section-title">About <span>AdvantiumTec</span></h2>
+              <div className="about-content">
+                <div className="about-text">
+                  <h2>Your Partner in Digital Transformation</h2>
+                  <p>AdvantiumTec is a forward-thinking technology solutions consultancy dedicated to helping businesses navigate the complex digital landscape. Founded by a team of industry veterans, we combine deep technical expertise with strategic business acumen to deliver solutions that drive real results.</p>
+                  <p>Our approach is collaborative and client-focused. We take the time to understand your unique challenges and objectives, then develop tailored solutions that align with your business goals. Whether you're looking to modernize legacy systems, develop innovative applications, or implement cutting-edge technologies, we're here to guide you through every step of the journey.</p>
+                  <a href="#contact" className="btn">Let's Work Together</a>
+                </div>
+                <div className="about-image">
+                  <img src="/api/placeholder/500/300" alt="AdvantiumTec Team" />
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <section id="services" className="services section">
+            <div className="container">
+              <h2 className="section-title">Our <span>Services</span></h2>
+              <div className="services-cards">
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                  </div>
+                  <h3>Custom Software Development</h3>
+                  <p>Tailored solutions designed to address your specific business needs, from web applications to enterprise systems.</p>
+                </div>
+                
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <h3>Technology Consulting</h3>
+                  <p>Strategic guidance on technology adoption, digital transformation, and IT architecture to maximize business value.</p>
+                </div>
+                
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                      <line x1="8" y1="21" x2="16" y2="21"></line>
+                      <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                  </div>
+                  <h3>Web & Mobile Development</h3>
+                  <p>Responsive, user-friendly websites and mobile applications built with the latest technologies for optimal performance.</p>
+                </div>
+                
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
+                    </svg>
+                  </div>
+                  <h3>UI/UX Design</h3>
+                  <p>Intuitive and engaging user interfaces that enhance user experience and drive business objectives.</p>
+                </div>
+                
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                  </div>
+                  <h3>API Development & Integration</h3>
+                  <p>Seamless integration of third-party services and development of robust APIs for enhanced functionality.</p>
+                </div>
+                
+                <div className="service-card">
+                  <div className="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                  </div>
+                  <h3>Technical Support & Maintenance</h3>
+                  <p>Ongoing support and maintenance services to ensure your systems remain secure, up-to-date, and optimized.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <section id="technologies" className="technologies section">
+            <div className="container">
+              <h2 className="section-title">Our <span>Technologies</span></h2>
+              <div className="tech-grid">
+                <div className="tech-item">
+                  <div className="tech-icon">
+                    <ReactIcon />
+                  </div>
+                  <h3>React.js</h3>
+                </div>
+                
+                <div className="tech-item">
+                  <div className="tech-icon">
+                    <NodeIcon />
+                  </div>
+                  <h3>Node.js</h3>
+                </div>
+                
+                <div className="tech-item">
+                  <div className="tech-icon">
+                    <NextIcon />
+                  </div>
+                  <h3>Next.js</h3>
+                </div>
+                
+                <div className="tech-item">
+                  <div className="tech-icon">
+                    <FullStackIcon />
+                  </div>
+                  <h3>Full Stack</h3>
+                </div>
+                
+                <div className="tech-item">
+                  <div className="tech-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                      <path fill="currentColor" d="M16.633 16.504c.869-.075 1.543-.84 1.499-1.754-.046-.914-.795-1.648-1.708-1.648h-.061c-.943.031-1.678.824-1.648 1.769.03.479.226.869.494 1.153-1.048 2.038-2.621 3.536-5.004 4.795-1.603.838-3.296 1.154-4.944.929-1.378-.194-2.456-.81-3.116-1.798-.988-1.499-1.078-3.116-.255-4.734.601-1.169 1.499-2.023 2.099-2.443-.15-.389-.33-1.048-.42-1.542-4.436 3.177-3.985 7.521-2.637 9.574 1.004 1.498 3.057 2.456 5.304 2.456.599 0 1.229-.044 1.843-.194 3.896-.749 6.847-3.086 8.54-6.532l.014-.031z" />
+                      <path fill="currentColor" d="M21.981 12.618c-2.287-2.702-5.6-4.191-9.399-4.191h-.48c-.266-.48-.65-.778-1.198-.778h-.045c-.93.016-1.648.824-1.648 1.754s.733 1.739 1.648 1.754h.06c.549-.034.963-.334 1.198-.824h.524c2.243 0 4.359.636 6.286 1.893 1.484.959 2.548 2.228 3.116 3.746.344.934.289 1.844-.15 2.627-.633 1.169-1.693 1.814-3.102 1.814-1.801 0-3.203-.816-4.046-1.259-.165-.06-.405-.12-.645.105-.255.255-.21.6-.164.75.269.72 1.214 1.604 2.227 2.068 1.378.61 2.892.72 4.19.3 1.816-.631 3.145-2.099 3.436-3.716.285-1.724-.118-3.368-1.708-5.062l-.02-.02zm-17.057 7.401c.059-.059.135-.088.211-.088.059 0 .119.015.18.045.256.12.659.299 1.318.299.82 0 1.618-.424 2.393-1.273.885-.973 1.304-2.262 1.304-3.596 0-2.732-1.739-4.335-4.275-4.335-.149 0-.27.015-.405.03-.18.044-.353.104-.531.164l-.03.016c-.045.013-.09.045-.134.071v.015c-.03.044-.059.089-.089.134-.06.104-.105.209-.149.329-.075.18-.105.39-.105.615 0 .795.225 1.784 1.115 2.612.569.54 1.154.777 1.572.777.105 0 .195-.015.285-.044.435-.134.639-.569.639-1.094 0-.778-.46-1.439-.869-1.679l-.054-.03c-.226-.134-.346-.195-.346-.399 0-.179.121-.344.345-.419l.061-.015c.289-.091 1.79-.3 2.606.375.704.584 1.05 1.724 1.05 3.432 0 2.428-1.649 4.62-3.778 4.62-.255 0-.524-.045-.763-.105-.146-.074-.315-.149-.45-.195-.091-.044-.194-.075-.315-.075-.21 0-.391.149-.48.375-.119.344-.044.778.166 1.063.166.211.39.315.609.315.196 0 .375-.06.524-.164.121-.074.27-.18.434-.3.226-.18.435-.345.659-.51.16-.12.301-.225.435-.3.195-.105.42-.18.643-.225h.134c.225 0 .405.015.585.061 1.064.239 1.754 1.154 1.754 2.327 0 1.424-1.229 2.588-2.728 2.588-.134 0-.27 0-.405-.015-.885-.074-1.709-.479-2.468-1.214-.046-.029-.06-.044-.106-.029-.046.015-.075.044-.09.075-.046.104-.061.209-.061.299 0 .375.211.718.57 1.034.54.419 1.379.824 2.293.93.254.03.524.045.793.045 2.618 0 4.727-2.114 4.727-4.724 0-2.453-1.873-4.291-4.142-4.335-.349-.015-.689.015-1.049.071-.09.015-.18.045-.3.075-.104.029-.225.075-.345.105-.12.03-.24.045-.36.075-.374.104-.764.299-1.124.54-.059.029-.12.074-.18.119-.89.106-.239.119-.329.119-.195 0-.391-.074-.569-.195-.069-.044-.145-.104-.211-.179-.09-.091-.18-.195-.24-.285-.09-.16-.12-.346-.12-.539 0-.225.06-.435.165-.629.061-.09.136-.18.226-.26.089-.075.194-.135.309-.18.286-.06.481-.034.691.014.135.03.194.045.27.044.165 0 .225-.105.24-.165.045-.164-.029-.33-.194-.449-.045-.03-.09-.044-.15-.06-.42-.105-.884-.09-1.290.134-.254.136-.465.344-.614.645-.195.314-.285.69-.285 1.123 0 .344.06.658.195.964.105.24.266.463.466.644.271.256.599.435.944.53.195.044.404.06.63.06.285 0 .59-.03.869-.104.196-.046.405-.136.605-.225.226-.119.42-.254.614-.39.195-.149.346-.314.51-.479l.015-.016c.12-.119.255-.254.39-.37.164-.134.36-.225.569-.225.225 0 .405.09.54.225.194.194.165.42.165.464 0 .151-.115.315-.345.54-.93.091-.18.165-.271.226-.45.329-.96.539-1.514.644-.27.046-.54.075-.795.075-.51 0-.989-.089-1.395-.27-.225-.09-.435-.209-.634-.344-.166-.12-.315-.239-.45-.375-.12-.12-.239-.27-.344-.405-.091-.135-.165-.271-.225-.405-.136-.27-.194-.539-.194-.795 0-.315.089-.6.255-.826.149-.225.36-.404.604-.52.136-.061.286-.105.436-.136.135-.029.272-.045.42-.045.3 0 .599.046.884.131.311.09.585.224.825.374.165.105.3.225.425.36.06.074.135.149.195.225.165.209.315.449.42.704.075.186.135.375.165.585.015.091.015.18.015.27 0 .301-.075.585-.21.84-.089.166-.195.314-.329.451-.135.119-.285.24-.45.314-.194.105-.39.18-.599.226-.33.059-.674.105-1.049.105-.48 0-.954-.061-1.379-.181-.3-.09-.569-.209-.795-.359-.271-.195-.464-.42-.599-.689-.146-.286-.226-.6-.226-.915 0-.66.256-1.215.765-1.619.675-.525 1.694-.688 2.398-.688.165 0 .33.015.45.015.15.016.314.016.48.016.239 0 .494-.016.734-.031.256-.029.51-.074.75-.134.27-.076.525-.166.765-.3.195-.105.359-.225.51-.36.146-.134.265-.284.345-.464.046-.121.075-.24.075-.36 0-.226-.105-.435-.255-.604-.195-.194-.435-.285-.69-.285-.226 0-.435.061-.614.166-.135.074-.255.194-.375.314-.15.136-.3.286-.495.39-.164.105-.329.166-.524.166-.12 0-.234-.016-.345-.061-.12-.045-.225-.119-.33-.209-.074-.075-.12-.15-.164-.24-.046-.09-.076-.179-.076-.285 0-.194.061-.345.15-.465.075-.105.165-.195.255-.271.09-.074.195-.135.3-.18.314-.119.673-.179 1.035-.179.975 0 1.859.421 2.468 1.123.689.75 1.04 1.709 1.04 2.818 0 .27-.046.554-.106.81-.165.75-.525 1.365-1.035 1.785-.346.284-.75.494-1.185.644-.435.15-.9.225-1.365.225-.976 0-1.755-.239-2.354-.674-.27-.195-.479-.419-.659-.66-.135-.194-.225-.405-.285-.614-.061-.195-.091-.405-.091-.616 0-.194.015-.389.061-.584.045-.211.119-.42.209-.6.091-.195.211-.375.344-.525.12-.15.255-.271.39-.39.285-.239.6-.435.944-.554.359-.135.734-.21 1.124-.21.194 0 .39.015.584.045.226.03.435.091.63.166.195.075.375.165.54.285.165.12.315.255.435.404.12.15.225.316.301.48.074.165.119.33.119.51 0 .375-.15.735-.436 1.02-.314.299-.689.479-1.109.554-.165.03-.314.045-.48.045-.614 0-1.199-.21-1.664-.614-.225-.195-.405-.435-.51-.704-.12-.271-.18-.555-.18-.855 0-.195.015-.39.06-.57.045-.194.12-.375.21-.555.091-.165.21-.33.33-.465.12-.135.255-.255.405-.359.12-.076.255-.15.39-.21.135-.06.285-.106.44-.136.12-.029.255-.044.39-.044.165 0 .329.015.479.06.15.045.284.105.405.195.09.074.165.164.225.254.045.091.074.181.074.285 0 .09-.029.195-.074.271-.045.09-.105.165-.181.225-.149.105-.33.12-.494.06-.061-.015-.105-.045-.166-.075-.15-.089-.314-.135-.494-.135-.314 0-.614.15-.855.42-.224.271-.359.599-.359.975 0 .345.105.645.27.899.18.255.449.435.779.479.061.016.135.016.21.016.33 0 .675-.166.945-.449.18-.209.284-.465.284-.735v-.045c0-.149-.044-.285-.134-.405-.09-.105-.225-.18-.39-.195-.149-.015-.271.016-.39.075-.12.06-.194.15-.24.271-.014.03-.014.06-.014.09 0 .09.044.165.119.24.074.074.165.119.27.119.074 0 .15-.029.21-.074.03-.03.06-.06.075-.09.015-.029.03-.044.045-.044.015 0 .03.015.045.044.015.03.015.06.015.09 0 .09-.045.18-.135.24-.09.075-.195.09-.33.09-.15 0-.3-.06-.39-.18-.09-.12-.15-.254-.15-.404 0-.149.045-.284.135-.405.09-.12.209-.195.36-.24.149-.045.314-.045.479-.015.165.029.315.09.45.18.135.09.24.225.314.375.076.15.106.3.106.465 0 .255-.09.51-.27.735-.18.225-.42.39-.689.48-.135.045-.285.06-.435.06-.345 0-.66-.075-.96-.285-.301-.195-.524-.465-.675-.78-.15-.3-.225-.645-.225-.989 0-.345.075-.675.195-.975.135-.3.345-.57.614-.765.27-.195.585-.314.96-.314.194 0 .39.03.57.09.3.09.57.239.779.45.12.119.21.254.285.405.075.149.105.3.105.465 0 .21-.075.405-.195.569-.12.165-.285.285-.479.345-.18.06-.375.045-.555-.03-.165-.074-.285-.193-.36-.344-.045-.09-.075-.195-.075-.301 0-.119.045-.224.12-.314.135-.15.329-.194.524-.12.
