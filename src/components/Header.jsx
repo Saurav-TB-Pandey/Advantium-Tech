@@ -1,192 +1,93 @@
-import { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  useTheme,
-  Container,
-} from "@mui/material";
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
-import { FaBars } from "react-icons/fa";
-import Logo from "../assets/logo.svg";
+import LogoImage from "../assets/logo.svg";
+import { Box, Typography } from "@mui/material";
+import { FaGithub } from "react-icons/fa";
 
-// Styled components using emotion
-const StyledAppBar = styled(AppBar)`
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const LogoText = styled(Typography)`
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: #3f51b5;
-  cursor: pointer;
-`;
-
-const NavLink = styled.a`
-  color: #333;
-  text-decoration: none;
-  margin-left: 2rem;
-  font-weight: 500;
-  position: relative;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #3f51b5;
-
-    &:after {
-      width: 100%;
-    }
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #3f51b5;
-    transition: width 0.3s ease;
-  }
-`;
-
-const MenuIconButton = styled(IconButton)`
-  color: #333;
-  display: none;
-
-  @media (max-width: 768px) {
+// Header component
+const HeaderDiv = styled(Box)`
+    padding: 1rem 2rem;
     display: flex;
-  }
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 10;
 `;
 
-const NavContainer = styled(Box)`
-  display: flex;
+const Logo = styled(Box)`
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2d1b69;
+    img {
+        height: 40px;
+        margin-right: 10px;
+    }
+`;
 
-  @media (max-width: 768px) {
-    display: none;
-  }
+const NavMenu = styled(Box)`
+    display: flex;
+    gap: 2rem;
+    a {
+        color: #2d1b69;
+        text-decoration: none;
+        font-weight: 500;
+    }
+`;
+
+const IconGroup = styled(Box)`
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 `;
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const navItems = [
-    { label: "Services", href: "#services" },
-    { label: "Technologies", href: "#technologies" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  // Mobile drawer content
-  const drawer = (
-    <Box
-      sx={{
-        width: 250,
-        paddingTop: 6,
-        paddingX: 2,
-      }}
-      role="presentation"
-      onClick={toggleMenu}
-    >
-      <List>
-        {navItems.map((item) => (
-          <ListItem
-            key={item.label}
-            component="a"
-            href={item.href}
-            sx={{
-              borderBottom: "1px solid #eee",
-              "&:hover": {
-                backgroundColor: "rgba(63, 81, 181, 0.08)",
-              },
-            }}
-          >
-            <ListItemText
-              primary={item.label}
-              primaryTypographyProps={{
-                fontWeight: 500,
-                color: "#333",
-              }}
-            />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  return (
-    <motion.div
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      <StyledAppBar position="sticky" elevation={0}>
-        <Container maxWidth="lg">
-          <Toolbar
-            sx={{
-              justifyContent: "space-between",
-              padding: { xs: "2px 0", md: "9px 0" },
-            }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <img src={Logo} alt="Advantium Tech" width={150} />
-            </motion.div>
-
-            <NavContainer>
-              {navItems.map((item) => (
-                <motion.div
-                  key={item.label}
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <NavLink href={item.href}>{item.label}</NavLink>
-                </motion.div>
-              ))}
-            </NavContainer>
-
-            <MenuIconButton
-              edge="end"
-              aria-label="menu"
-              onClick={toggleMenu}
-              sx={{ display: { md: "none" } }}
-            >
-              <FaBars />
-            </MenuIconButton>
-          </Toolbar>
-        </Container>
-      </StyledAppBar>
-
-      <Drawer
-        anchor="right"
-        open={menuOpen}
-        onClose={toggleMenu}
-        sx={{
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-    </motion.div>
-  );
+    return (
+        <HeaderDiv>
+            <Header>
+                <Logo>
+                    <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 100 100"
+                        fill="#2d1b69"
+                    >
+                        <path d="M50 10C26.8 10 8 28.8 8 52s18.8 42 42 42 42-18.8 42-42S73.2 10 50 10zm0 70c-15.5 0-28-12.5-28-28s12.5-28 28-28 28 12.5 28 28-12.5 28-28 28z" />
+                        <path
+                            d="M65 40L35 60M35 40L65 60"
+                            strokeWidth="8"
+                            stroke="#2d1b69"
+                            fill="none"
+                        />
+                    </svg>
+                    <span>meltano</span>
+                    <Typography variant="body2" sx={{ ml: 1, opacity: 0.7 }}>
+                        by arch
+                    </Typography>
+                </Logo>
+                <NavMenu>
+                    <a href="#services">Services</a>
+                    <a href="#technologies">Technologies</a>
+                    <a href="#carrier">Carrier</a>
+                    <a href="#about-us">About Us</a>
+                    <a href="#contact-us">Contact Us</a>
+                </NavMenu>
+                <IconGroup>
+                    <FaGithub size={24} color="#2d1b69" />
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#2d1b69"
+                    >
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                        <path d="M11 7h2v6h-2zm0 8h2v2h-2z" />
+                    </svg>
+                </IconGroup>
+            </Header>
+        </HeaderDiv>
+    );
 };
 
 export default Header;
