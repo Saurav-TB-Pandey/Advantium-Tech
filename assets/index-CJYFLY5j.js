@@ -282,4 +282,4 @@ export default theme;`}function Bd(e={},...i){const{breakpoints:r,mixins:s={},sp
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
-`;function E6(){const e=Kw();return ev(e.breakpoints.down("sm")),ev(e.breakpoints.between("sm","md")),P.jsxs(Ww,{theme:e,children:[P.jsx(IM,{}),P.jsxs(T6,{children:[P.jsx(hR,{}),P.jsx(x6,{})]})]})}function C6(){return P.jsx(uC,{children:P.jsx(PE,{children:P.jsx(P1,{path:"/",element:P.jsx(E6,{})})})})}ZT.createRoot(document.getElementById("root")).render(P.jsx(Ue.StrictMode,{children:P.jsx(C6,{})}));
+`;function E6(){const e=Kw();return ev(e.breakpoints.down("sm")),ev(e.breakpoints.between("sm","md")),P.jsxs(Ww,{theme:e,children:[P.jsx(IM,{}),P.jsxs(T6,{children:[P.jsx(hR,{}),P.jsx(x6,{})]})]})}function C6(){return P.jsx(uC,{basename:"/Advantium-Tech/",children:P.jsx(PE,{children:P.jsx(P1,{path:"/",element:P.jsx(E6,{})})})})}ZT.createRoot(document.getElementById("root")).render(P.jsx(Ue.StrictMode,{children:P.jsx(C6,{})}));
