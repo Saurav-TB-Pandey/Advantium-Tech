@@ -4,8 +4,8 @@ import "./App.css";
 
 function App() {
     return (
-        // <Router basename="/Advantium-Tech/">
-        <Router>
+        <Router basename="/Advantium-Tech/">
+            {/* <Router> */}
             {/* ✅ This ensures routes work on GitHub Pages */}
             <Routes>
                 <Route path="/" element={<Home />} />
